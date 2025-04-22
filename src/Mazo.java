@@ -23,6 +23,7 @@ public class Mazo {
     public void setMazos(ArrayList<Carta> mazos) {
         this.cartas = mazos;
     }
+
     public void generarBaraja(){
         for (int i = 0; i < Palo.values().length; i++) {
             for (int j = 0; j < Valor.values().length; j++) {
@@ -35,6 +36,15 @@ public class Mazo {
        for (int i = 0; i < numMazos; i++) {
            generarBaraja();
        }
-        System.out.println(cartas.size());
+
     }
+    public void mezclarMazos(){
+        for (int i = cartas.size()-1; i >0; i--) {
+            int j= (int) (Math.random()*(i+1));
+            Carta carta=cartas.get(i);
+            cartas.set(i,cartas.get(j));
+            cartas.set(j,carta);
+        }
+    }
+
 }
