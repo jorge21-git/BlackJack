@@ -24,27 +24,34 @@ public class Mazo {
         this.cartas = mazos;
     }
 
-    public void generarBaraja(){
+    public void generarBaraja() {
         for (int i = 0; i < Palo.values().length; i++) {
             for (int j = 0; j < Valor.values().length; j++) {
-                Carta carta=new Carta(Palo.values()[i],Valor.values()[j]);
+                Carta carta = new Carta(Palo.values()[i], Valor.values()[j]);
                 cartas.add(carta);
             }
         }
     }
-    public void generarMazos(int numMazos){
-       for (int i = 0; i < numMazos; i++) {
-           generarBaraja();
-       }
+
+    public void generarMazos(int numMazos) {
+        for (int i = 0; i < numMazos; i++) {
+            generarBaraja();
+        }
 
     }
-    public void mezclarMazos(){
-        for (int i = cartas.size()-1; i >0; i--) {
-            int j= (int) (Math.random()*(i+1));
-            Carta carta=cartas.get(i);
-            cartas.set(i,cartas.get(j));
-            cartas.set(j,carta);
+
+    public void mezclarMazos() {
+        for (int i = cartas.size() - 1; i > 0; i--) {
+            int j = (int) (Math.random() * (i + 1));
+            Carta carta = cartas.get(i);
+            cartas.set(i, cartas.get(j));
+            cartas.set(j, carta);
         }
     }
 
+    public Carta repartirCarta() {
+        Carta carta = cartas.remove(cartas.size() - 1); // quitar y guardar la carta
+        return carta;
+    }
+    
 }
