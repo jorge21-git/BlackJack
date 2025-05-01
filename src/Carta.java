@@ -2,14 +2,21 @@ public class Carta {
 
 private Palo palo;
 private Valor valor;
+private int valorNumerico;
 
 public Carta(Palo palo, Valor valor) {
     this.palo = palo;
     this.valor = valor;
+    this.valorNumerico = valor.getValorNumerico();
 }
+    public int getValorNumerico() {
+        return valorNumerico;
+    }
 
-
-public Palo getPalo() {
+    public void setValorNumerico(int valorNumerico) {
+        this.valorNumerico = valorNumerico;
+    }
+    public Palo getPalo() {
     return palo;
 }
 public void setPalo(Palo palo) {
@@ -21,65 +28,71 @@ public Valor getValor() {
 public void setValor(Valor valor) {
     this.valor = valor;
 }
-    public void dibujarCarta() {
+
+    public String[] dibujarCarta() {
         int altura = 7;
         int ancho = 11;
         String reset = "\u001B[0m"; // Reset del color al valor predeterminado
+        String[] lineas = new String[altura]; // Array para guardar las líneas de la carta
 
         for (int i = 0; i < altura; i++) {
+            StringBuilder linea = new StringBuilder(); // Usamos StringBuilder en lugar de una cadena vacía
             for (int j = 0; j < ancho; j++) {
                 if (i == 0) {
                     if (j == 0) {
-                        System.out.print("┌");
+                        linea.append("┌"); // Esquina superior izquierda
                     } else if (j == ancho - 1) {
-                        System.out.print("┐");
+                        linea.append("┐"); // Esquina superior derecha
                     } else {
-                        System.out.print("─");
+                        linea.append("─"); // Borde superior
                     }
                 } else if (i == altura - 1) {
                     if (j == 0) {
-                        System.out.print("└");
+                        linea.append("└"); // Esquina inferior izquierda
                     } else if (j == ancho - 1) {
-                        System.out.print("┘");
+                        linea.append("┘"); // Esquina inferior derecha
                     } else {
-                        System.out.print("─");
+                        linea.append("─"); // Borde inferior
                     }
                 } else {
                     if (j == 0 || j == ancho - 1) {
-                        System.out.print("│");
+                        linea.append("│"); // Bordes laterales
                     }
 
-                    // logo arriba izquierdo
+                    // Logo arriba izquierdo
                     else if (i == 1 && j == 1) {
-                        System.out.print(palo.getColor() + valor.getValor() + reset); // Imprime el valor con el color y luego lo resetea para que no se quede por defecto
+                        linea.append(palo.getColor()).append(valor.getValor()).append(reset); // Imprime el valor con el color y luego lo resetea
                     }
                     else if (i == 1 && j == 2) {
-                        System.out.print(palo.getColor() + palo.getSimbolo() + reset);
+                        linea.append(palo.getColor()).append(palo.getSimbolo()).append(reset);
                     }
 
-                    // logo medio
+                    // Logo medio
                     else if (i == 3 && j == 5) {
-                        System.out.print(palo.getColor() + valor.getValor() + reset);
+                        linea.append(palo.getColor()).append(valor.getValor()).append(reset);
                     }
                     else if (i == 3 && j == 6) {
-                        System.out.print(palo.getColor() + palo.getSimbolo() + reset);
+                        linea.append(palo.getColor()).append(palo.getSimbolo()).append(reset);
                     }
 
-                    // esquina abajo logo
+                    // Esquina abajo logo
                     else if (i == altura - 2 && j == ancho - 3) {
-                        System.out.print(palo.getColor() + valor.getValor() + reset);
+                        linea.append(palo.getColor()).append(valor.getValor()).append(reset);
                     }
                     else if (i == altura - 2 && j == ancho - 2) {
-                        System.out.print(palo.getColor() + palo.getSimbolo() + reset);
+                        linea.append(palo.getColor()).append(palo.getSimbolo()).append(reset);
                     }
                     else {
-                        System.out.print(" ");
+                        linea.append(" "); // Espacios en blanco
                     }
                 }
             }
-            System.out.println();
+            lineas[i] = linea.toString(); // Convertimos el StringBuilder a String y lo guardamos en el array 'lineas'
         }
+        return lineas; // Retornamos el array con las líneas
     }
+
+
 
 }
 
