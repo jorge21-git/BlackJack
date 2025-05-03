@@ -37,6 +37,7 @@ public Jugador(String nombre) {
 
     public void pedirCarta(Mazo mazo) {
     if (estaPlantado()) {
+        System.out.println("El jugador ya esta plantado. No puede pedir una carta.");
         return;
     }
     Carta carta=mazo.repartirCarta();
@@ -53,7 +54,6 @@ public Jugador(String nombre) {
     return estado==EstadoJugador.PLANTADO;
     }
     public int obtenerPuntaje() {
-
     int puntajeTotal=0;
     for(int i=0; i<mano.size(); i++) {
         Carta carta=mano.get(i);
