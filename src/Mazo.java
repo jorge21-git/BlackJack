@@ -50,7 +50,9 @@ public class Mazo {
     }
 
     public Carta repartirCarta() {
-        Carta carta = cartas.remove(cartas.size() - 1); // quitar y guardar la carta
+
+        Carta carta; // quitar y guardar la carta
+        carta = cartas.remove(cartas.size() - 1);
         return carta;
     }
     
