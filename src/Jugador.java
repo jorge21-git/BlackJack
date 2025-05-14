@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Jugador {
+public class Jugador implements BlackJack {
 private ArrayList<Carta> mano;
 private EstadoJugador estado;
 private String nombre;
@@ -91,7 +91,11 @@ public Jugador(String nombre) {
     estado=EstadoJugador.EN_JUEGO;
     }
 
+    @Override
+    public boolean tieneBlackJack() {
+    return mano.size()==2&&obtenerPuntaje()==21;
     }
+}
 
 
 
