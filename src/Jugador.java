@@ -5,12 +5,21 @@ private ArrayList<Carta> mano;
 private EstadoJugador estado;
 private String nombre;
 private int puntajeFinal;
+private boolean quiereSeguir = true;
 
 public Jugador(String nombre) {
     mano = new ArrayList<>();
     estado=EstadoJugador.EN_JUEGO;
     this.nombre = nombre;
 }
+
+    public boolean isQuiereSeguir() {
+        return quiereSeguir;
+    }
+
+    public void setQuiereSeguir(boolean quiereSeguir) {
+        this.quiereSeguir = quiereSeguir;
+    }
 
     public int getPuntajeFinal() {
         return puntajeFinal;
@@ -64,15 +73,18 @@ public Jugador(String nombre) {
     }
     public int obtenerPuntaje() {
     int puntajeTotal=0;
+    int ases=0;
     for(int i=0; i<mano.size(); i++) {
         Carta carta=mano.get(i);
-        int puntaje=0;
-        if(carta.getValor().equals(Valor.A)&&puntajeTotal>21) {
-            carta.setValorNumerico(1);
+        int valorCarta=carta.getValorNumerico();
+        puntajeTotal+=valorCarta;
+        if(carta.getValor().equals(Valor.A)) {
+            ases++;
         }
-        puntaje=carta.getValorNumerico();
-        puntajeTotal+=puntaje;
-
+    }
+    while(puntajeTotal>21&&ases>0) {
+        puntajeTotal=puntajeTotal-10;
+        ases--;
     }
     return puntajeTotal;
     }
