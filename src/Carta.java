@@ -35,6 +35,8 @@ public void setValor(Valor valor) {
         String reset = "\u001B[0m"; // Reset del color al valor predeterminado
         String[] lineas = new String[altura]; // Array para guardar las líneas de la carta
 
+        boolean esDiez = valor.getValor().length() == 2;  // Detectamos si el valor es "10"
+
         for (int i = 0; i < altura; i++) {
             StringBuilder linea = new StringBuilder(); // Usamos StringBuilder en lugar de una cadena vacía
             for (int j = 0; j < ancho; j++) {
@@ -58,26 +60,26 @@ public void setValor(Valor valor) {
                     if (j == 0 || j == ancho - 1) {
                         linea.append("│"); // Bordes laterales
                     }
-
                     // Logo arriba izquierdo
                     else if (i == 1 && j == 1) {
-                        linea.append(palo.getColor()).append(valor.getValor()).append(reset); // Imprime el valor con el color y luego lo resetea
+                        linea.append(palo.getColor()).append(valor.getValor()).append(reset);
+                        if (esDiez) j++;  // Si es "10", saltamos una posición extra
                     }
-                    else if (i == 1 && j == 2) {
+                    else if (i == 1 && ((esDiez && j == 3) || (!esDiez && j == 2))) {
                         linea.append(palo.getColor()).append(palo.getSimbolo()).append(reset);
                     }
-
                     // Logo medio
-                    else if (i == 3 && j == 5) {
+                    else if (i == 3 && ((esDiez && j == 4) || (!esDiez && j == 5))) {
                         linea.append(palo.getColor()).append(valor.getValor()).append(reset);
+                        if (esDiez) j++;
                     }
                     else if (i == 3 && j == 6) {
                         linea.append(palo.getColor()).append(palo.getSimbolo()).append(reset);
                     }
-
                     // Esquina abajo logo
-                    else if (i == altura - 2 && j == ancho - 3) {
+                    else if (i == altura - 2 && ((esDiez && j == ancho - 4) || (!esDiez && j == ancho - 3))) {
                         linea.append(palo.getColor()).append(valor.getValor()).append(reset);
+                        if (esDiez) j++;
                     }
                     else if (i == altura - 2 && j == ancho - 2) {
                         linea.append(palo.getColor()).append(palo.getSimbolo()).append(reset);
@@ -87,10 +89,11 @@ public void setValor(Valor valor) {
                     }
                 }
             }
-            lineas[i] = linea.toString(); // Convertimos el StringBuilder a String y lo guardamos en el array 'lineas'
+            lineas[i] = linea.toString();
         }
-        return lineas; // Retornamos el array con las líneas
+        return lineas;
     }
+
 
 
 
