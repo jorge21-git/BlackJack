@@ -80,21 +80,66 @@ public class Partida {
         crupier.pedirCarta(mazo);
         crupier.mostrarMano();
     }
-    public void mostrarResultadoRonda(){
+    public void mostrarResultadoRonda() {
+        int puntosCrupier = crupier.obtenerPuntaje();
+        System.out.println(" RESULTADOS RONDA");
+        System.out.println(" Puntos crupier: " + puntosCrupier + " puntos");
 
+        if (puntosCrupier > 21) {
+            System.out.println(" El crupier se ha pasado ");
+            crupier.setEstado(EstadoJugador.PERDIENDO);
+        } else if (puntosCrupier >= 17) {
+            System.out.println(" El crupier se ha plantado con " + puntosCrupier + " puntos");
+            crupier.setEstado(EstadoJugador.PLANTADO);
+        }
+
+        for (Jugador jugador : jugadores) {
+            int puntosJugador = jugador.getPuntajeFinal();
+
+            if (crupier.getEstado() == EstadoJugador.PERDIENDO) {
+                if (jugador.getEstado() != EstadoJugador.PERDIENDO) {
+                    System.out.println(jugador.getNombre() + " ha ganado con " + puntosJugador + " puntos");
+                    jugador.setEstado(EstadoJugador.GANANDO);
+                } else {
+                    System.out.println(jugador.getNombre() + " ha perdido por pasarse.");
+                }
+            } else if (crupier.getEstado() == EstadoJugador.PLANTADO) {
+                if (jugador.getEstado() == EstadoJugador.PERDIENDO) {
+                    System.out.println(jugador.getNombre() + " ha perdido por pasarse.");
+                } else if (puntosJugador > puntosCrupier) {
+                    System.out.println(jugador.getNombre() + " ha ganado con " + puntosJugador + " puntos");
+                    jugador.setEstado(EstadoJugador.GANANDO);
+                } else if (puntosJugador < puntosCrupier) {
+                    System.out.println("El crupier ha ganado con " + puntosCrupier + " puntos contra " + puntosJugador+" puntos de" +jugador.getNombre());
+                } else {
+                    System.out.println("Empate entre el crupier y " + jugador.getNombre() + " con " + puntosJugador + " puntos");
+                }
+            }
+        }
     }
 
-    public void siguienteTurno() {
+
+    public void jugarRonda() {
         for (int i = 0; i < jugadores.size(); i++) {
             Jugador jugador=jugadores.get(i);
                 int opcion;
                 do {
-                    if (jugador.getEstado() == EstadoJugador.PLANTADO){
-                        return;
+                    if (jugador.obtenerPuntaje()>21) {
+                        jugador.setEstado(EstadoJugador.PERDIENDO);
+                        jugador.setPuntajeFinal(jugador.obtenerPuntaje());
+                        System.out.println("El jugador "+jugador.getNombre()+" se ha pasado ");
+                        break;
                     }
-                    if (i>0){
+                    if (jugador.getEstado() == EstadoJugador.PLANTADO&&jugador.tieneBlackJack()){
+                        jugador.setPuntajeFinal(jugador.obtenerPuntaje());
+                        break;
+                    }
+                    if (jugador.getEstado() == EstadoJugador.PERDIENDO) {
+                        jugador.setPuntajeFinal(jugador.obtenerPuntaje());
+                        break;
+                    }
                         jugador.mostrarMano();
-                    }
+                    System.out.println("Puntos Actuales "+jugador.obtenerPuntaje()+" puntos");
                 System.out.println(jugador.getNombre()+" Diga que quiere hacer (1-3)");
                 System.out.println("1-PLantarse");
                 System.out.println("2-Pedir carta");
@@ -105,27 +150,37 @@ public class Partida {
                 switch (opcion) {
                     case 1:
                         jugador.setEstado(EstadoJugador.PLANTADO);
+                        jugador.setPuntajeFinal(jugador.obtenerPuntaje());
                         System.out.println("Jugador "+jugador.getNombre()+" se ha plantado. ");
                         break;
                     case 2:
-                        if (jugador.estaPlantado()&&jugador.obtenerPuntaje()>21) {
-                            System.out.print(" el jugador "+jugador.getNombre()+" se ha pasado no puede pedir la carta ");
+                        int puntajeAntesdePasarse=jugador.obtenerPuntaje();
+                        if (jugador.getEstado() == EstadoJugador.PERDIENDO) {
+                            System.out.println("El jugador ya ha perdido. No puede pedir carta.");
+                            break;
                         }
-                        else {
-                            jugador.pedirCarta(mazo);
-                            jugador.mostrarMano();
-                            if (jugador.obtenerPuntaje()>21){
-                                System.out.println(jugador.getNombre()+"se ha pasado lo siento ");
-                                jugador.setEstado(EstadoJugador.PERDIENDO);
-                            }
-                            if (jugador.tieneBlackJack()){
-                                System.out.println(jugador.getNombre()+" BlackJack Enhorabuena ");
-                                jugador.setEstado(EstadoJugador.GANANDO);
-                            }
+                        if (jugador.getEstado() == EstadoJugador.PLANTADO) {
+                            System.out.println("El jugador ya está plantado. No puede pedir carta.");
+                            break;
                         }
+                        jugador.pedirCarta(mazo);
+                        jugador.mostrarMano();
+                        if (jugador.obtenerPuntaje()>21) {
+                            jugador.setEstado(EstadoJugador.PERDIENDO);
+                            jugador.setPuntajeFinal(puntajeAntesdePasarse);
+                            break;
+                        }
+                        if (jugador.tieneBlackJack()) {
+                            System.out.println("¡Enhorabuena, " + jugador.getNombre() + "! Tienes Blackjack.");
+                            jugador.setEstado(EstadoJugador.PLANTADO);
+                            jugador.setPuntajeFinal(jugador.obtenerPuntaje());
+                            break;
+                        }
+
                         break;
                     case 3:
                         jugador.setEstado(EstadoJugador.PERDIENDO);
+                        jugador.setPuntajeFinal(jugador.obtenerPuntaje());
                         System.out.println(jugador.getNombre()+" Hasta luego");
                         break;
                     default:
@@ -135,6 +190,8 @@ public class Partida {
         }
         crupier.mostrarMano();
         crupier.turnoCrupier(mazo);
+        crupier.setPuntajeFinal(crupier.obtenerPuntaje());
+        mostrarResultadoRonda();
     }
 
 }
