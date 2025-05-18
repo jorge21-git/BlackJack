@@ -4,12 +4,21 @@ public class Jugador implements BlackJack {
 private ArrayList<Carta> mano;
 private EstadoJugador estado;
 private String nombre;
+private int puntajeFinal;
 
 public Jugador(String nombre) {
     mano = new ArrayList<>();
     estado=EstadoJugador.EN_JUEGO;
     this.nombre = nombre;
 }
+
+    public int getPuntajeFinal() {
+        return puntajeFinal;
+    }
+
+    public void setPuntajeFinal(int puntajeFinal) {
+        this.puntajeFinal = puntajeFinal;
+    }
 
     public String getNombre() {
         return nombre;
