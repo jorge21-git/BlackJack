@@ -105,12 +105,12 @@ public class Partida {
                 }
             } else if (crupier.getEstado() == EstadoJugador.PLANTADO) {
                 if (jugador.getEstado() == EstadoJugador.PERDIENDO) {
-                    System.out.println(jugador.getNombre() + " ha perdido por pasarse.");
+                    System.out.println(jugador.getNombre() + " ha perdido por abandonar");
                 } else if (puntosJugador > puntosCrupier) {
                     System.out.println(jugador.getNombre() + " ha ganado con " + puntosJugador + " puntos");
                     jugador.setEstado(EstadoJugador.GANANDO);
                 } else if (puntosJugador < puntosCrupier) {
-                    System.out.println("El crupier ha ganado con " + puntosCrupier + " puntos contra " + puntosJugador+" puntos de" +jugador.getNombre());
+                    System.out.println("El crupier ha ganado con " + puntosCrupier + " puntos contra " + puntosJugador+" puntos de " +jugador.getNombre());
                 } else {
                     System.out.println("Empate entre el crupier y " + jugador.getNombre() + " con " + puntosJugador + " puntos");
                 }
@@ -193,5 +193,29 @@ public class Partida {
         crupier.setPuntajeFinal(crupier.obtenerPuntaje());
         mostrarResultadoRonda();
     }
+    private boolean alMenosUnJugadorQuiereSeguir() {
+        boolean algunoQuiere = false;
+
+         for (Jugador jugador : jugadores) {
+            System.out.println(jugador.getNombre() + ", ¿quieres jugar otra ronda? (si/no)");
+            String respuesta = teclado.nextLine().trim().toLowerCase();
+            if (respuesta.equals("si")) {
+                algunoQuiere = true;
+                jugador.setQuiereSeguir(true);
+            } else {
+                jugador.setQuiereSeguir(false);
+            }
+        }
+        return algunoQuiere;
+    }
+
+    public void ejecutarPartidaCompleta() {
+        do {
+            iniciarPartida();
+            jugarRonda();
+        } while (alMenosUnJugadorQuiereSeguir());
+    }
+
+
 
 }
