@@ -69,22 +69,31 @@ public class Partida {
 
         crupier.reiniciarJugador();
         for (Jugador jugador : jugadores) {
-            jugador.reiniciarJugador();
+            if (jugador.isQuiereSeguir()){
+                jugador.reiniciarJugador();
+            }
         }
 
-        for (int i = 0; i < jugadores.size(); i++) {
-            Jugador jugador=jugadores.get(i);
-            jugador.pedirCarta(mazo);
-            jugador.mostrarMano();
+        for (Jugador jugador : jugadores) {
+            if (jugador.isQuiereSeguir()){
+                jugador.pedirCarta(mazo);
+                jugador.mostrarMano();
+            }
+
         }
         crupier.pedirCarta(mazo);
         crupier.mostrarMano();
     }
+
     public void mostrarResultadoRonda() {
         int puntosCrupier = crupier.obtenerPuntaje();
+
         System.out.println(" RESULTADOS RONDA");
         System.out.println(" Puntos crupier: " + puntosCrupier + " puntos");
 
+        if (crupier.tieneBlackJack()){
+            System.out.println(" El crupier tiene black jack");
+        }
         if (puntosCrupier > 21) {
             System.out.println(" El crupier se ha pasado ");
             crupier.setEstado(EstadoJugador.PERDIENDO);
@@ -93,7 +102,33 @@ public class Partida {
             crupier.setEstado(EstadoJugador.PLANTADO);
         }
 
+        boolean crupierTieneBlackJack=crupier.tieneBlackJack();
+
+
         for (Jugador jugador : jugadores) {
+            boolean jugadorTieneBlackJack=jugador.tieneBlackJack();
+            // los dos tienen BlackJack
+            if (crupierTieneBlackJack&&jugadorTieneBlackJack){
+                System.out.println("Empate entre " + jugador.getNombre() + " y el crupier con BlackJack.");
+                continue;
+            }
+            // Solo el jugador tiene BlackJack
+            if (!crupierTieneBlackJack && jugadorTieneBlackJack) {
+                System.out.println(jugador.getNombre() + " ha ganado con BlackJack.");
+                jugador.setEstado(EstadoJugador.GANANDO);
+                continue;
+            }
+            // Solo el crupier tiene BlackJack
+            if (crupierTieneBlackJack && !jugadorTieneBlackJack) {
+                System.out.println(jugador.getNombre() + " ha perdido. El crupier tiene BlackJack.");
+                continue;
+            }
+
+            if (jugador.getEstado() == EstadoJugador.ABANDONADO) {
+                System.out.println(jugador.getNombre() + " ha abandonado la partida.");
+                continue;
+            }
+
             int puntosJugador = jugador.getPuntajeFinal();
 
             if (crupier.getEstado() == EstadoJugador.PERDIENDO) {
@@ -105,12 +140,12 @@ public class Partida {
                 }
             } else if (crupier.getEstado() == EstadoJugador.PLANTADO) {
                 if (jugador.getEstado() == EstadoJugador.PERDIENDO) {
-                    System.out.println(jugador.getNombre() + " ha perdido por abandonar");
+                    System.out.println(jugador.getNombre() + " ha perdido por pasarse.");
                 } else if (puntosJugador > puntosCrupier) {
                     System.out.println(jugador.getNombre() + " ha ganado con " + puntosJugador + " puntos");
                     jugador.setEstado(EstadoJugador.GANANDO);
                 } else if (puntosJugador < puntosCrupier) {
-                    System.out.println("El crupier ha ganado con " + puntosCrupier + " puntos contra " + puntosJugador+" puntos de " +jugador.getNombre());
+                    System.out.println("El crupier ha ganado con " + puntosCrupier + " puntos contra " + puntosJugador + " puntos de " + jugador.getNombre());
                 } else {
                     System.out.println("Empate entre el crupier y " + jugador.getNombre() + " con " + puntosJugador + " puntos");
                 }
@@ -119,10 +154,16 @@ public class Partida {
     }
 
 
+
     public void jugarRonda() {
         for (int i = 0; i < jugadores.size(); i++) {
             Jugador jugador=jugadores.get(i);
+            //se salta a un jugador que no quiere seguir
+            if (!jugador.isQuiereSeguir()) {
+                continue;
+            }
                 int opcion;
+
                 do {
                     if (jugador.obtenerPuntaje()>21) {
                         jugador.setEstado(EstadoJugador.PERDIENDO);
@@ -155,14 +196,6 @@ public class Partida {
                         break;
                     case 2:
                         int puntajeAntesdePasarse=jugador.obtenerPuntaje();
-                        if (jugador.getEstado() == EstadoJugador.PERDIENDO) {
-                            System.out.println("El jugador ya ha perdido. No puede pedir carta.");
-                            break;
-                        }
-                        if (jugador.getEstado() == EstadoJugador.PLANTADO) {
-                            System.out.println("El jugador ya está plantado. No puede pedir carta.");
-                            break;
-                        }
                         jugador.pedirCarta(mazo);
                         jugador.mostrarMano();
                         if (jugador.obtenerPuntaje()>21) {
@@ -179,7 +212,8 @@ public class Partida {
 
                         break;
                     case 3:
-                        jugador.setEstado(EstadoJugador.PERDIENDO);
+                        jugador.setEstado(EstadoJugador.ABANDONADO);
+                        jugador.setQuiereSeguir(false);
                         jugador.setPuntajeFinal(jugador.obtenerPuntaje());
                         System.out.println(jugador.getNombre()+" Hasta luego");
                         break;
@@ -214,6 +248,8 @@ public class Partida {
             iniciarPartida();
             jugarRonda();
         } while (alMenosUnJugadorQuiereSeguir());
+
+        System.out.println("Todos los jugadores han abandonado. ¡Gracias por jugar!");
     }
 
 
