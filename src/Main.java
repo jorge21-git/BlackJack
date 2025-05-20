@@ -2,10 +2,14 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-
-        Mazo mazo=new Mazo();
-        mazo.generarMazos(5);
-
+        Partida partida=new Partida();
+        Jugador jorge=new Jugador("Jorge");
+        Jugador david=new Jugador("David");
+        Jugador maria=new Jugador("Maria");
+        partida.añadirJugador(jorge);
+        partida.añadirJugador(david);
+        partida.añadirJugador(maria);
+       partida.ejecutarPartidaCompleta();
 
         }
     }

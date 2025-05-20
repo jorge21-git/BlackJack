@@ -3,5 +3,6 @@ public enum EstadoJugador {
     EN_JUEGO,
     GANANDO,
     PERDIENDO,
-    ABANDONADO
+    ABANDONADO,
+    EMPATADO
 }

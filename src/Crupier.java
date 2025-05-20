@@ -22,9 +22,6 @@ public class Crupier extends Jugador{
             }
             pedirCarta(mazo);
             mostrarMano();
-            if (tieneBlackJack()){
-                System.out.println(" BlackJack ");
-            }
         }
 
         int puntos=obtenerPuntaje();

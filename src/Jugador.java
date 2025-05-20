@@ -10,7 +10,7 @@ public class Jugador implements BlackJack {
     private boolean quiereSeguir = true;
     private int saldo;
     private int apuestaActual;
-    private Scanner teclado=new Scanner(System.in);
+    private Scanner teclado;
 
 
     public Jugador(String nombre) {
@@ -19,6 +19,7 @@ public class Jugador implements BlackJack {
         this.nombre = nombre;
         this.saldo = 100;
         this.apuestaActual = 0;
+        teclado = new Scanner(System.in);
     }
 
 
@@ -101,8 +102,7 @@ public class Jugador implements BlackJack {
     public int obtenerPuntaje() {
         int puntajeTotal = 0;
         int ases = 0;
-        for (int i = 0; i < mano.size(); i++) {
-            Carta carta = mano.get(i);
+        for (Carta carta : mano) {
             int valorCarta = carta.getValorNumerico();
             puntajeTotal += valorCarta;
             if (carta.getValor().equals(Valor.A)) {
@@ -137,6 +137,7 @@ public class Jugador implements BlackJack {
     public void reiniciarJugador() {
         mano.clear();
         estado = EstadoJugador.EN_JUEGO;
+        apuestaActual=0;
     }
 
     @Override
@@ -150,23 +151,29 @@ public class Jugador implements BlackJack {
             System.out.println("¿Cuántas fichas quieres apostar? Tienes " + saldo + " fichas.");
             cantidad = teclado.nextInt();
             teclado.nextLine();
-            if (cantidad > saldo) {
+            if (cantidad<=0){
+                System.out.println(" La apuesta dbe ser mayro que 0 ");
+            }
+            else if (cantidad > saldo) {
                 System.out.println("No puedes apostar más de lo que tienes.");
             }
-        } while (cantidad > saldo);
+        } while (cantidad > saldo||cantidad<=0);
 
         saldo = saldo - cantidad;
         System.out.println("Apuesta de " + cantidad + " fichas aceptada. Te quedan " + saldo);
         return cantidad;
     }
 
-    public void ganarApuesta() {
+    public void cobrar() {
         saldo =saldo+apuestaActual*2;
         apuestaActual=0;
     }
-    public void empateApuesta() {
+    public void noCobrar() {
         saldo=saldo+apuestaActual;
         apuestaActual=0;
+    }
+    public void cobrarBlackJack() {
+        saldo += (int)(apuestaActual * 2.5);
     }
 }
 
