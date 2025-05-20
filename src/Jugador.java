@@ -1,17 +1,42 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Jugador implements BlackJack {
-private ArrayList<Carta> mano;
-private EstadoJugador estado;
-private String nombre;
-private int puntajeFinal;
-private boolean quiereSeguir = true;
+    private ArrayList<Carta> mano;
+    private EstadoJugador estado;
+    private String nombre;
+    private int puntajeFinal;
+    private boolean quiereSeguir = true;
+    private int saldo;
+    private int apuestaActual;
+    private Scanner teclado=new Scanner(System.in);
 
-public Jugador(String nombre) {
-    mano = new ArrayList<>();
-    estado=EstadoJugador.EN_JUEGO;
-    this.nombre = nombre;
-}
+
+    public Jugador(String nombre) {
+        mano = new ArrayList<>();
+        estado = EstadoJugador.EN_JUEGO;
+        this.nombre = nombre;
+        this.saldo = 100;
+        this.apuestaActual = 0;
+    }
+
+
+    public int getApuestaActual() {
+        return apuestaActual;
+    }
+
+    public void setApuestaActual(int apuestaActual) {
+        this.apuestaActual = apuestaActual;
+    }
+
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
+    }
 
     public boolean isQuiereSeguir() {
         return quiereSeguir;
@@ -54,39 +79,41 @@ public Jugador(String nombre) {
     }
 
     public void pedirCarta(Mazo mazo) {
-    if (estaPlantado()) {
-        System.out.println("El jugador ya esta plantado. No puede pedir una carta.");
-        return;
-    }
-    Carta carta=mazo.repartirCarta();
-    mano.add(carta);
-    }
-
-    public void plantarse(){
-    if (estado==EstadoJugador.EN_JUEGO) {
-        estado=EstadoJugador.PLANTADO;
-    }
-
-    }
-    public boolean estaPlantado(){
-    return estado==EstadoJugador.PLANTADO;
-    }
-    public int obtenerPuntaje() {
-    int puntajeTotal=0;
-    int ases=0;
-    for(int i=0; i<mano.size(); i++) {
-        Carta carta=mano.get(i);
-        int valorCarta=carta.getValorNumerico();
-        puntajeTotal+=valorCarta;
-        if(carta.getValor().equals(Valor.A)) {
-            ases++;
+        if (estaPlantado()) {
+            System.out.println("El jugador ya esta plantado. No puede pedir una carta.");
+            return;
         }
+        Carta carta = mazo.repartirCarta();
+        mano.add(carta);
     }
-    while(puntajeTotal>21&&ases>0) {
-        puntajeTotal=puntajeTotal-10;
-        ases--;
+
+    public void plantarse() {
+        if (estado == EstadoJugador.EN_JUEGO) {
+            estado = EstadoJugador.PLANTADO;
+        }
+
     }
-    return puntajeTotal;
+
+    public boolean estaPlantado() {
+        return estado == EstadoJugador.PLANTADO;
+    }
+
+    public int obtenerPuntaje() {
+        int puntajeTotal = 0;
+        int ases = 0;
+        for (int i = 0; i < mano.size(); i++) {
+            Carta carta = mano.get(i);
+            int valorCarta = carta.getValorNumerico();
+            puntajeTotal += valorCarta;
+            if (carta.getValor().equals(Valor.A)) {
+                ases++;
+            }
+        }
+        while (puntajeTotal > 21 && ases > 0) {
+            puntajeTotal = puntajeTotal - 10;
+            ases--;
+        }
+        return puntajeTotal;
     }
 
     public void mostrarMano() {
@@ -94,8 +121,7 @@ public Jugador(String nombre) {
         ArrayList<String[]> cartasDibujadas = new ArrayList<>();
         // Guardamos cada carta dibujada en la lista
         System.out.println(nombre);
-        for (int i = 0; i < mano.size(); i++) {
-            Carta carta = mano.get(i);
+        for (Carta carta : mano) {
             cartasDibujadas.add(carta.dibujarCarta());
         }
         // Imprimimos línea por línea
@@ -107,17 +133,42 @@ public Jugador(String nombre) {
             System.out.println(); // Salto de línea después de imprimir todas las cartas en esa línea
         }
     }
+
     public void reiniciarJugador() {
-    mano.clear();
-    estado=EstadoJugador.EN_JUEGO;
+        mano.clear();
+        estado = EstadoJugador.EN_JUEGO;
     }
 
     @Override
     public boolean tieneBlackJack() {
-    return mano.size()==2&&obtenerPuntaje()==21;
+        return mano.size() == 2 && obtenerPuntaje() == 21;
+    }
+
+    public int apostar() {
+        int cantidad;
+        do {
+            System.out.println("¿Cuántas fichas quieres apostar? Tienes " + saldo + " fichas.");
+            cantidad = teclado.nextInt();
+            teclado.nextLine();
+            if (cantidad > saldo) {
+                System.out.println("No puedes apostar más de lo que tienes.");
+            }
+        } while (cantidad > saldo);
+
+        saldo = saldo - cantidad;
+        System.out.println("Apuesta de " + cantidad + " fichas aceptada. Te quedan " + saldo);
+        return cantidad;
+    }
+
+    public void ganarApuesta() {
+        saldo =saldo+apuestaActual*2;
+        apuestaActual=0;
+    }
+    public void empateApuesta() {
+        saldo=saldo+apuestaActual;
+        apuestaActual=0;
     }
 }
-
 
 
 
