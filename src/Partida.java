@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Partida {
-    Scanner teclado=new Scanner(System.in);
+
     ArrayList<Jugador> jugadores;
     private boolean enCurso;
+    private Scanner teclado;
     Crupier crupier;
     Mazo mazo;
     Jugador jugador;
@@ -60,8 +61,11 @@ public class Partida {
        jugadores.add(jugador);
     }
 
+
+
     public void iniciarPartida() {
-        enCurso=true;
+        enCurso = true;
+
         if (mazo.getMazos().isEmpty()) {
             mazo.generarMazos(6);
             mazo.mezclarMazos();
@@ -69,29 +73,31 @@ public class Partida {
 
         crupier.reiniciarJugador();
         for (Jugador jugador : jugadores) {
-            if (jugador.isQuiereSeguir()){
+            if (jugador.isQuiereSeguir()) {
                 jugador.reiniciarJugador();
             }
         }
-
+        pedirApuestas();
         for (Jugador jugador : jugadores) {
-            if (jugador.isQuiereSeguir()){
+            if (jugador.isQuiereSeguir()) {
                 jugador.pedirCarta(mazo);
                 jugador.mostrarMano();
             }
-
         }
+
         crupier.pedirCarta(mazo);
         crupier.mostrarMano();
     }
 
+
     public void mostrarResultadoRonda() {
+
         int puntosCrupier = crupier.obtenerPuntaje();
 
         System.out.println(" RESULTADOS RONDA");
         System.out.println(" Puntos crupier: " + puntosCrupier + " puntos");
 
-        if (crupier.tieneBlackJack()){
+        if (crupier.tieneBlackJack()) {
             System.out.println(" El crupier tiene black jack");
         }
         if (puntosCrupier > 21) {
@@ -102,30 +108,33 @@ public class Partida {
             crupier.setEstado(EstadoJugador.PLANTADO);
         }
 
-        boolean crupierTieneBlackJack=crupier.tieneBlackJack();
-
+        boolean crupierTieneBlackJack = crupier.tieneBlackJack();
 
         for (Jugador jugador : jugadores) {
-            boolean jugadorTieneBlackJack=jugador.tieneBlackJack();
-            // los dos tienen BlackJack
-            if (crupierTieneBlackJack&&jugadorTieneBlackJack){
-                System.out.println("Empate entre " + jugador.getNombre() + " y el crupier con BlackJack.");
-                continue;
-            }
-            // Solo el jugador tiene BlackJack
-            if (!crupierTieneBlackJack && jugadorTieneBlackJack) {
-                System.out.println(jugador.getNombre() + " ha ganado con BlackJack.");
-                jugador.setEstado(EstadoJugador.GANANDO);
-                continue;
-            }
-            // Solo el crupier tiene BlackJack
-            if (crupierTieneBlackJack && !jugadorTieneBlackJack) {
-                System.out.println(jugador.getNombre() + " ha perdido. El crupier tiene BlackJack.");
-                continue;
-            }
+            int saldoAntesdeRonda= jugador.getSaldo();
+            boolean jugadorTieneBlackJack = jugador.tieneBlackJack();
 
             if (jugador.getEstado() == EstadoJugador.ABANDONADO) {
                 System.out.println(jugador.getNombre() + " ha abandonado la partida.");
+                continue;
+            }
+
+            if (crupierTieneBlackJack && jugadorTieneBlackJack) {
+                System.out.println("Empate entre " + jugador.getNombre() + " y el crupier con BlackJack.");
+                jugador.setSaldo(jugador.getSaldo() + jugador.getApuestaActual());
+                continue;
+            }
+
+            if (!crupierTieneBlackJack && jugadorTieneBlackJack) {
+                System.out.println(jugador.getNombre() + " ha ganado con BlackJack.");
+                jugador.setEstado(EstadoJugador.GANANDO);
+                jugador.setSaldo(jugador.getSaldo() + (int) (jugador.getApuestaActual() * 2.5));
+                mostrarGananciasJugador(jugador, saldoAntesdeRonda);
+                continue;
+            }
+
+            if (crupierTieneBlackJack && !jugadorTieneBlackJack) {
+                System.out.println(jugador.getNombre() + " ha perdido. El crupier tiene BlackJack.");
                 continue;
             }
 
@@ -135,6 +144,7 @@ public class Partida {
                 if (jugador.getEstado() != EstadoJugador.PERDIENDO) {
                     System.out.println(jugador.getNombre() + " ha ganado con " + puntosJugador + " puntos");
                     jugador.setEstado(EstadoJugador.GANANDO);
+                    jugador.setSaldo(jugador.getSaldo() + jugador.getApuestaActual() * 2);
                 } else {
                     System.out.println(jugador.getNombre() + " ha perdido por pasarse.");
                 }
@@ -144,16 +154,20 @@ public class Partida {
                 } else if (puntosJugador > puntosCrupier) {
                     System.out.println(jugador.getNombre() + " ha ganado con " + puntosJugador + " puntos");
                     jugador.setEstado(EstadoJugador.GANANDO);
+                    jugador.setSaldo(jugador.getSaldo() + jugador.getApuestaActual() * 2);
+                    mostrarGananciasJugador(jugador,saldoAntesdeRonda);
                 } else if (puntosJugador < puntosCrupier) {
                     System.out.println("El crupier ha ganado con " + puntosCrupier + " puntos contra " + puntosJugador + " puntos de " + jugador.getNombre());
                 } else {
                     System.out.println("Empate entre el crupier y " + jugador.getNombre() + " con " + puntosJugador + " puntos");
+                    jugador.setSaldo(jugador.getSaldo() + jugador.getApuestaActual());
+                    mostrarGananciasJugador(jugador,saldoAntesdeRonda);
                 }
             }
+
         }
+
     }
-
-
 
     public void jugarRonda() {
         for (int i = 0; i < jugadores.size(); i++) {
@@ -251,7 +265,28 @@ public class Partida {
 
         System.out.println("Todos los jugadores han abandonado. ¡Gracias por jugar!");
     }
+    public void pedirApuestas() {
+        for (Jugador jugador : jugadores) {
+            System.out.println(jugador.getNombre());
+            if (!jugador.isQuiereSeguir())
+                continue;
 
+            int apuesta = jugador.apostar();
+            jugador.setApuestaActual(apuesta);
+        }
+    }
+    public void mostrarGananciasJugador(Jugador jugador, int saldoAnterior) {
+        int saldoActual = jugador.getSaldo();
+        int diferencia = saldoActual - saldoAnterior;
+
+        if (diferencia > 0) {
+            System.out.println(jugador.getNombre() + " ha ganado " + diferencia + " fichas.");
+        } else if (diferencia < 0) {
+            System.out.println(jugador.getNombre() + " ha perdido " + (-diferencia) + " fichas.");
+        } else {
+            System.out.println(jugador.getNombre() + " no ha ganado ni perdido fichas.");
+        }
+    }
 
 
 }
