@@ -1,0 +1,14 @@
+Resumen de la partida (Rondas jugadas: 2)
+Jugador: Jorge
+Saldo final: 90
+Estado final: PLANTADO
+------------------------------------------------
+Jugador: David
+Saldo final: 100
+Estado final: EMPATADO
+------------------------------------------------
+Jugador: Maria
+Saldo final: 110
+Estado final: ABANDONADO
+------------------------------------------------
+
