@@ -12,12 +12,20 @@ public class Jugador implements BlackJack {
     private int apuestaActual;
     private Scanner teclado;
 
-
     public Jugador(String nombre) {
         mano = new ArrayList<>();
         estado = EstadoJugador.EN_JUEGO;
         this.nombre = nombre;
-        this.saldo = 100;
+        this.saldo = saldo;
+        this.apuestaActual = 0;
+        teclado = new Scanner(System.in);
+    }
+
+    public Jugador(String nombre,int saldo) {
+        mano = new ArrayList<>();
+        estado = EstadoJugador.EN_JUEGO;
+        this.nombre = nombre;
+        this.saldo = saldo;
         this.apuestaActual = 0;
         teclado = new Scanner(System.in);
     }
@@ -80,19 +88,18 @@ public class Jugador implements BlackJack {
     }
 
     public void pedirCarta(Mazo mazo) {
+        if(mazo==null) {
+            throw new IllegalArgumentException(" el mazo no puedes ser nulo");
+        }
         if (estaPlantado()) {
             System.out.println("El jugador ya esta plantado. No puede pedir una carta.");
             return;
         }
         Carta carta = mazo.repartirCarta();
-        mano.add(carta);
-    }
-
-    public void plantarse() {
-        if (estado == EstadoJugador.EN_JUEGO) {
-            estado = EstadoJugador.PLANTADO;
+        if(carta==null) {
+            throw new IllegalArgumentException(" el mazo esta vacio no se pudo repartir la carta.");
         }
-
+        mano.add(carta);
     }
 
     public boolean estaPlantado() {
@@ -138,42 +145,12 @@ public class Jugador implements BlackJack {
         mano.clear();
         estado = EstadoJugador.EN_JUEGO;
         apuestaActual=0;
+        puntajeFinal=0;
     }
 
     @Override
     public boolean tieneBlackJack() {
         return mano.size() == 2 && obtenerPuntaje() == 21;
-    }
-
-    public int apostar() {
-        int cantidad;
-        do {
-            System.out.println("¿Cuántas fichas quieres apostar? Tienes " + saldo + " fichas.");
-            cantidad = teclado.nextInt();
-            teclado.nextLine();
-            if (cantidad<=0){
-                System.out.println(" La apuesta dbe ser mayro que 0 ");
-            }
-            else if (cantidad > saldo) {
-                System.out.println("No puedes apostar más de lo que tienes.");
-            }
-        } while (cantidad > saldo||cantidad<=0);
-
-        saldo = saldo - cantidad;
-        System.out.println("Apuesta de " + cantidad + " fichas aceptada. Te quedan " + saldo);
-        return cantidad;
-    }
-
-    public void cobrar() {
-        saldo =saldo+apuestaActual*2;
-        apuestaActual=0;
-    }
-    public void noCobrar() {
-        saldo=saldo+apuestaActual;
-        apuestaActual=0;
-    }
-    public void cobrarBlackJack() {
-        saldo += (int)(apuestaActual * 2.5);
     }
 }
 

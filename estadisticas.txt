@@ -1,14 +1,290 @@
-Resumen de la partida (Rondas jugadas: 2)
+Resumen de la partida (Rondas jugadas: 1)
+
 Jugador: Jorge
-Saldo final: 90
-Estado final: PLANTADO
+Saldo final: 99 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
 ------------------------------------------------
 Jugador: David
-Saldo final: 100
-Estado final: EMPATADO
+Saldo final: 99 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
 ------------------------------------------------
 Jugador: Maria
-Saldo final: 110
-Estado final: ABANDONADO
+Saldo final: 99 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+🏆 Jugador con más victorias: Jorge (0 victoria(s))
+💰 Jugador con más fichas: Jorge (99 fichas)
+💸 Jugador con menos fichas: Jorge (99 fichas)
+❌ Jugador con más derrotas: Jorge (0 derrota(s))
+🤝 Jugador con más empates: Jorge (0 empate(s))
+=== PARTIDA registrada en: 2025-05-21 01:27:22 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: Jorge
+Saldo final: 99 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: David
+Saldo final: 99 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: Maria
+Saldo final: 99 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 01:28:59 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: Jorge
+Saldo final: 104 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: David
+Saldo final: 104 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: Maria
+Saldo final: 102 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 01:54:41 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: Jorge
+Saldo final: 104 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: David
+Saldo final: 104 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: Maria
+Saldo final: 104 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 02:00:46 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: Jorge
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: David
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: Maria
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 02:06:49 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: Jorge
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: David
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: Maria
+Saldo final: 100 fichas
+Victorias: 0
+Empates: 1
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 02:20:57 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: Jorge
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: David
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: Maria
+Saldo final: 98 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 03:00:47 ===
+Resumen de la partida (Rondas jugadas: 1)
+
+=== PARTIDA registrada en: 2025-05-21 03:24:45 ===
+Resumen de la partida (Rondas jugadas: 2)
+Jugador: David
+Saldo final: 15 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 03:43:23 ===
+Resumen de la partida (Rondas jugadas: 6)
+Jugador: DAvid
+Saldo final: 0 fichas
+Victorias: 4
+Empates: 0
+Derrotas (o abandonos): 2
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 03:45:21 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: david
+Saldo final: 0 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 03:48:53 ===
+Resumen de la partida (Rondas jugadas: 2)
+Jugador: david
+Saldo final: 0 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 2
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 04:02:55 ===
+Resumen de la partida (Rondas jugadas: 5)
+Jugador: David
+Saldo final: 0 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 04:18:28 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: david
+Saldo final: 20 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 04:34:02 ===
+Resumen de la partida (Rondas jugadas: 4)
+Jugador: david
+Saldo final: 0 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 3
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 05:14:38 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: DAvdi
+Saldo final: 0 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 05:17:02 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: David
+Saldo final: 0 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+
+=== PARTIDA registrada en: 2025-05-21 05:20:46 ===
+Resumen de la partida (Rondas jugadas: 1)
+Jugador: David
+Saldo final: 0 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
+------------------------------------------------
+Jugador: Pedro
+Saldo final: 25 fichas
+Victorias: 1
+Empates: 0
+Derrotas (o abandonos): 0
+Blackjacks conseguidos: 1
+------------------------------------------------
+Jugador: Ramon
+Saldo final: 0 fichas
+Victorias: 0
+Empates: 0
+Derrotas (o abandonos): 1
+Blackjacks conseguidos: 0
 ------------------------------------------------
 

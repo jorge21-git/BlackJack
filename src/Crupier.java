@@ -1,7 +1,7 @@
 
 public class Crupier extends Jugador{
     private Mazo mazo;
-    public Crupier(String nombre){
+    public Crupier(String nombre) {
         super(nombre);
     }
 
